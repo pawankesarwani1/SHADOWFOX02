@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSK Fan Universe — Single OK Fix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ——— same styles as your last version ——— */
+    :root{--csk-yellow:#ffd200;--csk-blue:#0141a9;--bg:#0a0f25;--surface:#0f1635;--ink:#eaf1ff;--muted:#b9c7ff;--border:rgba(255,255,255,.14);--shadow:0 10px 28px rgba(0,0,0,.35)}
+    *{box-sizing:border-box} html,body{margin:0;padding:0;scroll-behavior:smooth}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:
+      radial-gradient(1000px 500px at 120% -10%, rgba(255,210,0,.2), transparent 60%),
+      radial-gradient(1000px 500px at -20% 110%, rgba(1,65,169,.28), transparent 60%),
+      var(--bg);line-height:1.55}
+    
+    .container{width:min(1100px,92vw);margin:0 auto}
+    section{padding:28px 0}.section-title{font-family:Montserrat,sans-serif;font-weight:900;font-size:28px;margin:0 0 8px}.section-sub{color:var(--muted);margin:0 0 16px}
+    
+    .topbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);background:rgba(15,22,53,.7);border-bottom:1px solid var(--border)}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
+    
+    .brand{display:flex;align-items:center;gap:10px}.logo{height:40px;width:40px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff7b2,#ffd200 60%,#f7b400);color:var(--csk-blue);font-weight:900;display:grid;place-items:center}
+    
+    nav a{color:var(--ink);text-decoration:none;font-weight:700;padding:8px 12px;border:1px solid var(--border);border-radius:999px;margin-left:6px;display:inline-block;transition:.2s}
+    nav a:hover{background:linear-gradient(90deg,#ffe873,var(--csk-yellow));color:#0b2a7a;transform:translateY(-2px)}
+    
+    .chip{padding:6px 10px;border:1px solid var(--border);border-radius:999px;font-weight:700;color:var(--muted)}
+    .btn{text-decoration: none;
+    border:none;border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer;background:linear-gradient(90deg,#ffe76c,#ffd200);color:#10307a;box-shadow:0 0 18px rgba(255,210,0,.3);transition:.2s}
+    .btn:hover{text-decoration: none;
+        transform:translateY(-2px)}
+    
+    
+    .hero-card{background:linear-gradient(160deg,rgba(255,210,0,.18),rgba(1,65,169,.25));border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+    .badge{display:inline-grid;place-items:center;height:26px;padding:0 10px;border-radius:999px;background:linear-gradient(90deg,#fff,#ffe34a);color:#0b2a7a;font-weight:900;font-size:12px}
+    .hero h2{font-family:Montserrat,sans-serif;font-size:40px;line-height:1.1;margin:8px 0 10px}
+    
+    .row{display:flex;gap:10px;flex-wrap:wrap}.ticker{white-space:nowrap;overflow:hidden;border:1px solid var(--border);border-radius:10px;background:rgba(1,65,169,.25)}
+    
+    
+    .marquee{display:inline-block;padding:8px 12px;animation:marquee 28s linear infinite;font-weight:700}
+    @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+    .grid{display:grid;gap:14px}.g-4{grid-template-columns:repeat(4,minmax(0,1fr))}.g-3{grid-template-columns:repeat(3,minmax(0,1fr))}.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}.g-1{grid-template-columns:1fr}
+    @media (max-width:1100px){.g-4{grid-template-columns:repeat(3,1fr)}}@media (max-width:820px){.g-4,.g-3{grid-template-columns:repeat(2,1fr)}}@media (max-width:560px){.g-4,.g-3,.g-2{grid-template-columns:1fr}}
+    
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow);transition:.25s}
+    .card:hover{transform:translateY(-6px);box-shadow:0 14px 36px rgba(255,210,0,.18)}.tag{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(255,210,0,.16);border:1px solid rgba(255,210,0,.5);color:#ffe36b;font-size:12px;font-weight:800}
+    
+    .match-col{display:grid;gap:14px}
+    .match{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px dashed var(--border);border-radius:10px;background:rgba(255,255,255,.03)}
+    .match strong{color:#fff}.match small{color:var(--muted)}.pill{padding:6px 10px;border-radius:999px;background:rgba(1,65,169,.25);border:1px solid rgba(1,65,169,.4);color:#e2ecff;font-weight:700}
+    
+    .player{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:center;cursor:pointer}
+    
+    .avatar-wrap{position:relative;height:84px;width:84px}.avatar-wrap img{height:84px;width:84px;border-radius:12px;object-fit:cover;border:2px solid rgba(255,255,255,.2)}
+    .avatar-badge{position:absolute;bottom:-6px;right:-6px;background:linear-gradient(90deg,#ffe76c,#ffd200);color:#0b2a7a;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:900;box-shadow:0 0 12px rgba(255,210,0,.4)}
+    
+    .gallery figure{margin:0;overflow:hidden;border-radius:12px;border:1px solid var(--border)} .gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:.25s}
+    .gallery figure:hover img{transform:scale(1.05);filter:saturate(1.2) contrast(1.05)}
+    
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;place-items:center;z-index:20}.lightbox.active{display:grid}
+    .lightbox img{max-width:92vw;max-height:86vh;border-radius:12px}
+    
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;place-items:center;padding:20px;z-index:30}
+    .modal.active{display:grid}
+    .modal-card{width:min(640px,94vw);background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+    .modal-card .head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+
+      input,textarea{
+    width:100%; padding:10px; border-radius:10px; border:1px solid var(--border);
+    background:rgba(255,255,255,.06); color:var(--ink)
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand"><div class="logo">CSK</div><strong>CSK Fan Universe</strong></div>
+      <nav aria-label="Primary">
+        <a href="#home">Home</a><a href="#schedule">Schedule</a><a href="#players">Players</a>
+        <a href="#news">News</a><a href="#gallery">Gallery</a><a href="#polls">Polls</a><a href="#contact">Contact</a>
+      </nav>
+      <div class="chip" id="clock">--:--</div>
+    </div>
+  </header>
+
+  <!-- Home -->
+  <section id="home">
+    <div class="container">
+      <div class="hero">
+        <div>
+          <span class="badge">CHENNAI SUPER KINGS </span>
+          <h2>Whistle Podu! The Ultimate CSK Fan Page</h2>
+          <p>CHENNAI SUPER KINGS PERIYA WHISTLE ADINGA.</p>
+          <div class="row">
+            <a class="btn" href="#schedule">See Fixtures</a>
+            <a class="btn" href="#players" style="background:linear-gradient(90deg,#7cfccb,#00d18f);color:#062b1f">Meet the Squad</a>
+          </div>
+        </div>
+        <br>
+        <div class="hero-card">
+          <div class="ticker">
+            <div class="marquee">Fan meetup at Marina this Sunday • Retro jersey poll live • Watchalong on matchday •</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section id="schedule">
+    <div class="container">
+      <h3 class="section-title">Match Schedule</h3>
+      <p class="section-sub"></p>
+      <div id="matchList" class="match-col"></div>
+    </div>
+  </section>
+
+  <!-- Players -->
+  <section id="players">
+    <div class="container">
+      <h3 class="section-title">Super Kings Squad</h3>
+      <p class="section-sub">Chennai super Kings teams</p>
+      <div id="playerGrid" class="grid g-4"></div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news">
+    <div class="container">
+      <h3 class="section-title">Latest Fan News</h3>
+      <div id="newsGrid" class="grid g-3"></div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="container">
+      <h3 class="section-title">Fan Gallery</h3>
+      <p class="section-sub">Tap to view in lightbox.</p>
+      <div class="grid g-3 gallery" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- Polls -->
+  <section id="polls">
+    <div class="container">
+      <h3 class="section-title">Fan Polls</h3>
+      <div class="card" id="pollCard">
+        <div class="tag">Vote</div>
+        <h4 style="margin:10px 0">Who is the MVP of CSK this season?</h4>
+        <div class="grid g-1">
+          <div class="match">
+            <strong>Ruturaj Gaikwad</strong>
+            <div class="row" style="align-items:center">
+              <div style="width:160px;height:10px;background:#1b244b;border-radius:999px;overflow:hidden;margin-right:8px">
+                <div id="bar-gaikwad" style="height:100%;width:0;background:linear-gradient(90deg,#ffe76c,#ffd200)"></div>
+              </div>
+              <button class="btn vote" data-key="gaikwad">Vote</button>
+            </div>
+          </div>
+          <div class="match">
+            <strong>Ravindra Jadeja</strong>
+            <div class="row" style="align-items:center">
+              <div style="width:160px;height:10px;background:#1b244b;border-radius:999px;overflow:hidden;margin-right:8px">
+                <div id="bar-jadeja" style="height:100%;width:0;background:linear-gradient(90deg,#ffe76c,#ffd200)"></div>
+              </div>
+              <button class="btn vote" data-key="jadeja">Vote</button>
+            </div>
+          </div>
+          <div class="match">
+            <strong>Shivam Dube</strong>
+            <div class="row" style="align-items:center">
+              <div style="width:160px;height:10px;background:#1b244b;border-radius:999px;overflow:hidden;margin-right:8px">
+                <div id="bar-dube" style="height:100%;width:0;background:linear-gradient(90deg,#ffe76c,#ffd200)"></div>
+              </div>
+              <button class="btn vote" data-key="dube">Vote</button>
+            </div>
+          </div>
+        </div>
+        <small class="section-sub">Votes are stored locally on the device.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / About -->
+  <section id="contact">
+    <div class="container">
+      <h3 class="section-title">Contact & About</h3>
+      <div class="grid g-2">
+        <form class="card" id="contactForm">
+          <label>Name<br><input name="name" required></label><br>
+          <label>Email<br><input type="email" name="email" required></label><br>
+          <label>Message<br><textarea rows="4" name="msg" required></textarea></label><br>
+          <button class="btn" type="submit">Send</button>
+          <small class="section-sub" id="formNote"></small>
+        </form>
+        <div class="card">
+          <div class="tag">About CSK</div>
+          <p>Chennai Super Kings (CSK) are one of the IPL’s most successful and beloved teams, known for consistency, calm leadership, and the Whistle Podu Army. Chepauk’s electrifying atmosphere and CSK’s tactical smarts have produced iconic comebacks and unforgettable finishes season after season.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+    <img alt="Expanded fan image"/>
+  </div>
+
+  <!-- Single Modal (one OK only) -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="document">
+      <div class="head">
+        <h4 id="modalTitle" style="margin:0">Notice</h4>
+        <button class="btn" id="modalClose">Okay</button>
+      </div>
+      <p class="section-sub" id="modalBody" style="margin-top:8px">—</p>
+      <div id="modalActions" class="row"></div>
+    </div>
+  </div>
+
+  <script>
+    // Clock
+    const clock = document.getElementById('clock');
+    const tick = () => clock.textContent = new Date().toLocaleTimeString('en-IN',{hour12:false});
+    tick(); setInterval(tick,1000);
+
+    // Helpers
+    const el=(t,a={},c=[])=>{const e=document.createElement(t);for(const[k,v]of Object.entries(a)){if(k==='class')e.className=v; else if(k==='html')e.innerHTML=v; else if(k.startsWith('on'))e.addEventListener(k.slice(2),v); else e.setAttribute(k,v);} (Array.isArray(c)?c:[c]).forEach(n=>n!=null&&e.append(n)); return e;};
+
+    // Modal (single OK only)
+    let lastFocus=null;
+    const modal=document.getElementById('modal');
+    const modalTitle=document.getElementById('modalTitle');
+    const modalBody=document.getElementById('modalBody');
+    const modalActions=document.getElementById('modalActions');
+    const modalClose=document.getElementById('modalClose');
+
+    function openModal(title, body, focusSource=null){
+      lastFocus = focusSource || document.activeElement;
+      modalTitle.textContent = title;
+      modalBody.textContent = body;
+      modalActions.innerHTML = ''; // IMPORTANT: no extra OK buttons injected
+      modal.classList.add('active');
+      modalClose.focus();
+    }
+    function closeModal(){
+      modal.classList.remove('active');
+      if(lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+
+    // Matches
+    const matches=[
+      {date:'Aug 25, 2025 19:30', vs:'MI',   venue:'MA Chidambaram, Chennai', status:'Home'},
+      {date:'Aug 29, 2025 19:30', vs:'RCB',  venue:'M. Chinnaswamy, Bengaluru', status:'Away'},
+      {date:'Sep 02, 2025 19:30', vs:'PBKS', venue:'Chepauk, Chennai', status:'Home'},
+      {date:'Sep 06, 2025 19:30', vs:'GT',   venue:'Ahmedabad', status:'Away'}
+    ];
+    const matchList=document.getElementById('matchList');
+
+    // Reminder helpers
+    function createICS(m){
+      const dt=new Date(m.date);
+      const s=dt.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+      const e=new Date(dt.getTime()+3*60*60*1000).toISOString().replace(/[-:]/g,'').split('.')+'Z';
+      const body=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//CSK Fan Universe//EN','BEGIN:VEVENT',`UID:${crypto.randomUUID()}`,`DTSTAMP:${s}`,`DTSTART:${s}`,`DTEND:${e}`,`SUMMARY:CSK vs ${m.vs}`,`LOCATION:${m.venue}`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+      return URL.createObjectURL(new Blob([body],{type:'text/calendar;charset=utf-8'}));
+    }
+    async function notify(title,body){try{if('Notification'in window){const p=await Notification.requestPermission();if(p==='granted') new Notification(title,{body});}}catch(e){}}
+
+    matches.forEach(m=>{
+      const row=el('div',{class:'card match'});
+      const left=el('div',{},[
+        el('div',{html:`<strong>CSK vs ${m.vs}</strong>`}),
+        el('small',{},[`${m.venue} • ${new Date(m.date).toLocaleString('en-IN')}`])
+      ]);
+      const tickets=el('button',{class:'btn'},['Tickets']);
+      tickets.addEventListener('click',e=>{
+        e.stopPropagation();
+        openModal('Tickets','Tickets are full for this match. Try resale closer to matchday.',tickets);
+      });
+      const reminder=el('button',{class:'btn'},['Set Reminder']);
+      reminder.addEventListener('click', async e=>{
+        e.stopPropagation();
+        const saved=JSON.parse(localStorage.getItem('reminders')||'[]');
+        if(!saved.find(x=>x.date===m.date&&x.vs===m.vs)) saved.push(m);
+        localStorage.setItem('reminders',JSON.stringify(saved));
+        await notify('Reminder set',`CSK vs ${m.vs} at ${m.venue}`);
+        const ics=createICS(m);
+        // Provide ONLY the .ics link in actions area, no extra OK
+        modalActions.innerHTML='';
+        const a=el('a',{href:ics,download:`CSK-vs-${m.vs}.ics`,class:'btn'},['Download .ics']);
+        openModal('Reminder added!','Add to your calendar for reliability.',reminder);
+        modalActions.append(a);
+      });
+      const right=el('div',{class:'row'},[el('span',{class:'pill'},[m.status]),tickets,reminder]);
+      row.append(left,right); matchList.append(row);
+    });
+
+    // Players
+    const players=[
+      {name:'MS Dhoni',role:'WK-Batter',img:'ms.jpeg'},
+      {name:'Ravindra Jadeja',role:'All-rounder',img:'rj.jpeg'},
+      {name:'Ruturaj Gaikwad',role:'Batter',img:'rg.jpeg'},
+      {name:'Shivam Dube',role:'Batter',img:'sd.jpeg'},
+      {name:'Deepak Chahar',role:'Bowler',img:'dc.jpeg'},
+      {name:'Matheesha Pathirana',role:'Bowler',img:'pati.jpeg'},
+      {name:'Moeen Ali',role:'All-rounder',img:'ma.jpeg'},
+      {name:'Tushar Deshpande',role:'Bowler',img:'td.jpeg'}
+    ];
+    const playerGrid=document.getElementById('playerGrid');
+    players.forEach(p=>{
+      const card=el('div',{class:'card player',tabIndex:0});
+      const pic=el('div',{class:'avatar-wrap'},[
+        el('img',{src:p.img,alt:p.name,loading:'lazy'}),
+        el('span',{class:'avatar-badge'},['CSK'])
+      ]);
+      const meta=el('div',{},[
+        el('strong',{},[p.name]),
+        el('div',{class:'section-sub'},[p.role]),
+        el('div',{class:'tag'},['Fan Favorite'])
+      ]);
+      card.append(pic,meta);
+      card.addEventListener('click',()=>openModal(p.name,`${p.role} • Forever Yellow Love!`,card));
+      playerGrid.append(card);
+    });
+
+    // News (Read opens modal; single OK)
+    const news=[
+      {title:'Retro Kit Vote Wins 70-30', tag:'Community', body:'Fans chose the 2011-inspired retro kit. Launch next week with giveaways at Marina!'},
+      {title:'Chepauk Chants hit 120dB', tag:'Stadium', body:'New decibel high recorded in the final over. Officials praised smooth management.'},
+      {title:'Fan Art: Top 10 Posted', tag:'Creatives', body:'Top 10 artworks are live. Community voting closes Friday.'},
+      {title:'Watchalong hits 10k viewers', tag:'Live', body:'Discord watchalong crossed 10,000 concurrent viewers with quizzes.'},
+      {title:'Whistle Podu Remix trending', tag:'Music', body:'Fan-made remix trending on local charts.'},
+      {title:'Charity drive crosses ₹5L', tag:'Cause', body:'Over ₹5,00,000 raised for youth academies in 48 hours.'}
+    ];
+    const newsGrid=document.getElementById('newsGrid');
+    news.forEach(n=>{
+      const readBtn=el('button',{class:'btn'},['Read']);
+      const card=el('div',{class:'card'},[
+        el('div',{class:'tag'},[n.tag]),
+        el('h4',{style:'margin:8px 0'},[n.title]),
+        readBtn
+      ]);
+      readBtn.addEventListener('click',()=>openModal(n.title,n.body,readBtn));
+      newsGrid.append(card);
+    });
+
+    // Gallery
+    const galleryImages=[ 
+        'team.jpeg',
+    'long.jpeg',
+    'f2.jpeg',
+    'fan2.jpeg',
+    'fanms.jpeg',
+    'fan.jpeg',
+    
+]
+    const galleryGrid=document.getElementById('galleryGrid');
+    const lightbox=document.getElementById('lightbox'); const lightImg=lightbox.querySelector('img');
+    galleryImages.forEach(src=>{
+      const fig=el('figure',{class:'card',style:'padding:0;overflow:hidden'});
+      const img=el('img',{src,loading:'lazy',alt:'Fan image'});
+      fig.append(img); galleryGrid.append(fig);
+      fig.addEventListener('click',()=>{lightImg.src=src; lightbox.classList.add('active');});
+    });
+    lightbox.addEventListener('click',()=>lightbox.classList.remove('active'));
+
+    // Poll
+    const state=JSON.parse(localStorage.getItem('poll')||'{"gaikwad":0,"jadeja":0,"dube":0}');
+    const keys=['gaikwad','jadeja','dube'];
+    function renderPoll(){const t=keys.reduce((a,k)=>a+state[k],0)||1; keys.forEach(k=>{document.getElementById('bar-'+k).style.width=Math.round(state[k]*100/t)+'%';});}
+    renderPoll();
+    document.querySelectorAll('.vote').forEach(btn=>{
+      btn.addEventListener('click',()=>{const k=btn.dataset.key; state[k]++; localStorage.setItem('poll',JSON.stringify(state)); renderPoll(); btn.textContent='Voted'; setTimeout(()=>btn.textContent='Vote',1100);});
+    });
+
+    // Contact
+    document.getElementById('contactForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const data=Object.fromEntries(new FormData(e.target).entries());
+      localStorage.setItem('contactDraft',JSON.stringify(data));
+      document.getElementById('formNote').textContent='Thanks! Saved locally for now.';
+      e.target.reset();
+    });
+
+    // Section reveal
+    const reveal=new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          en.target.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:450,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
+          reveal.unobserve(en.target);
+        }
+      });
+    },{threshold:.15});
+    document.querySelectorAll('section').forEach(s=>reveal.observe(s));
+  </script>
+</body>
+</html>
